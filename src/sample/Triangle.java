@@ -31,7 +31,7 @@ public class Triangle {
 
     // rotate points around (0, 0) --> (upper left corner of Canvas
     public void rotate(double deg){
-        Matrix rot_mat = Draw.create_rot_mat(deg);
+        Matrix rot_mat = Transform.create_rot_mat(deg);
 
         // rotate p1
         double[][] vecData = new double[][]{{this.p1.x}, {this.p1.y}, {this.p1.z}};
@@ -61,7 +61,7 @@ public class Triangle {
     public void rotate(double deg, double x, double y){
         Matrix rot_mat = new Matrix(3, 3);
 
-        rot_mat = Draw.create_trafo_mat(deg, -x, -y);
+        rot_mat = Transform.create_trafo_mat(deg, -x, -y);
         double[][] vecData = {{this.p1.x}, {this.p1.y}, {this.p1.z}};
         Matrix vec1 = new Matrix(vecData);
         Matrix vec1_rotated = rot_mat.times(vec1);

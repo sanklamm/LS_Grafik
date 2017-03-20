@@ -3,7 +3,7 @@ package sample;
 /**
  * Created by s on 02/03/17.
  */
-public class Draw {
+public class Transform {
     public double deg = 10;
     public double trans_x = 5;
     public double trans_y = 10;
