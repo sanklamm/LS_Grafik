@@ -46,7 +46,6 @@ public class Matrix {
             this.vector[i] = data[i];
     }
 
-
     // copy constructor
     private Matrix(Matrix A) {
         this(A.data);

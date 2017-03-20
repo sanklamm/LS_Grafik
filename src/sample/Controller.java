@@ -22,16 +22,9 @@ import static java.lang.Integer.parseInt;
 
 public class Controller implements Initializable{
 
-    Point p1 = new Point(10, 10);
-    Point p2 = new Point(150, 10);
-    Point p3 = new Point(10, 200);
-    Triangle t1 = new Triangle(p1, p2, p3);
-
-     Point q1;
-     Point q2;
-     Point q3;
-
-
+    Point p1;
+    Point p2;
+    Point p3;
 
     @FXML private Canvas canvas1;
     private GraphicsContext gc1;
@@ -39,15 +32,17 @@ public class Controller implements Initializable{
 
     @FXML private TextField tf_p1x, tf_p1y, tf_p2x, tf_p2y, tf_p3x, tf_p3y, tf_deg;
 
+    // gets input from text fields and offsets values to be in reference to the mathematical center
     private void getPointInput(){
         double xOffset = canvas1.getWidth()/2;
         double yOffset = canvas1.getHeight()/2;
 
-        q1 = new Point(Double.parseDouble(tf_p1x.getText()) + xOffset, Double.parseDouble(tf_p1y.getText()) + yOffset);
-        q2 = new Point(Double.parseDouble(tf_p2x.getText()) + xOffset, Double.parseDouble(tf_p2y.getText()) + yOffset);
-        q3 = new Point(Double.parseDouble(tf_p3x.getText()) + xOffset, Double.parseDouble(tf_p3y.getText()) + yOffset);
+        p1 = new Point(Double.parseDouble(tf_p1x.getText()) + xOffset, Double.parseDouble(tf_p1y.getText()) + yOffset);
+        p2 = new Point(Double.parseDouble(tf_p2x.getText()) + xOffset, Double.parseDouble(tf_p2y.getText()) + yOffset);
+        p3 = new Point(Double.parseDouble(tf_p3x.getText()) + xOffset, Double.parseDouble(tf_p3y.getText()) + yOffset);
     }
 
+    // helper that draws a new coordinate system
     private void drawCoordinateSystem(){
         double canvas_half_height = canvas1.getHeight() / 2;
         double canvas_half_width = canvas1.getWidth() / 2;
@@ -60,8 +55,8 @@ public class Controller implements Initializable{
 
     @FXML private void drawTriangle(ActionEvent event){
         getPointInput();
-        t2 = new Triangle(q1, q2, q3);
-        gc1.clearRect(0, 0, canvas1.getWidth(), canvas1.getHeight());
+        t2 = new Triangle(p1, p2, p3);
+        gc1.clearRect(0, 0, canvas1.getWidth(), canvas1.getHeight()); // cleans the canvas
         drawCoordinateSystem();
         t2.draw(gc1);
     }
@@ -70,12 +65,13 @@ public class Controller implements Initializable{
         getPointInput();
         double deg = Double.parseDouble(tf_deg.getText());
         t2.rotate(deg, canvas1.getWidth()/2, canvas1.getHeight()/2);
-        gc1.clearRect(0, 0, canvas1.getWidth(), canvas1.getHeight());
+        gc1.clearRect(0, 0, canvas1.getWidth(), canvas1.getHeight()); // cleans the canvas
         drawCoordinateSystem();
         t2.draw(gc1);
 
     }
 
+    // start with a coordinate system
     @Override
     public void initialize(URL location, ResourceBundle resources){
         drawCoordinateSystem();

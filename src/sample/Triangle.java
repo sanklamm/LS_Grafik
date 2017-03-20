@@ -1,16 +1,6 @@
 package sample;
 
-import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
-import javafx.stage.Stage;
-
-import java.util.concurrent.TimeUnit;
-
 
 /**
  * Created by s on 02/03/17.
@@ -39,32 +29,21 @@ public class Triangle {
         }
     }
 
+    // rotate points around (0, 0) --> (upper left corner of Canvas
     public void rotate(double deg){
-        Matrix rot_mat = new Matrix(3, 3);
-        rot_mat = Draw.create_rot_mat(deg);
-        double[][] vecData = {{this.p1.x}, {this.p1.y}, {this.p1.z}};
+        Matrix rot_mat = Draw.create_rot_mat(deg);
+
+        // rotate p1
+        double[][] vecData = new double[][]{{this.p1.x}, {this.p1.y}, {this.p1.z}};
         Matrix vec1 = new Matrix(vecData);
-        System.out.println("Hier die Rotationsmatrix");
-        rot_mat.show();
-        System.out.println("Hier der alte Vektor");
-        vec1.show();
         Matrix vec1_rotated = rot_mat.times(vec1);
-        System.out.println("Hier der neue Vektor");
-        rot_mat.show();
         this.p1.x = vec1_rotated.getData()[0][0];
         this.p1.y = vec1_rotated.getData()[1][0];
         this.p1.z = vec1_rotated.getData()[2][0];
 
-//        vecData = new double[][] {{this.p2.x}, {this.p2.y}, {this.p2.z}};
         vecData = new double[][] {{this.p2.x}, {this.p2.y}, {this.p2.z}};
         Matrix vec2 = new Matrix(vecData);
-        System.out.println("rot_mat:");
-        rot_mat.show();
-        System.out.println("vec2:");
-        vec2.show();
         Matrix vec2_rotated = rot_mat.times(vec2);
-        System.out.println("Vec2 after Rotation");
-        vec2_rotated.show();
         this.p2.x = vec2_rotated.getData()[0][0];
         this.p2.y = vec2_rotated.getData()[1][0];
         this.p2.z = vec2_rotated.getData()[2][0];
@@ -78,32 +57,21 @@ public class Triangle {
         this.p3.z = vec3_rotated.getData()[2][0];
     }
 
+    // rotates points around arbitrary points
     public void rotate(double deg, double x, double y){
         Matrix rot_mat = new Matrix(3, 3);
+
         rot_mat = Draw.create_trafo_mat(deg, -x, -y);
         double[][] vecData = {{this.p1.x}, {this.p1.y}, {this.p1.z}};
         Matrix vec1 = new Matrix(vecData);
-        System.out.println("Hier die Rotationsmatrix");
-        rot_mat.show();
-        System.out.println("Hier der alte Vektor");
-        vec1.show();
         Matrix vec1_rotated = rot_mat.times(vec1);
-        System.out.println("Hier der neue Vektor");
-        rot_mat.show();
         this.p1.x = vec1_rotated.getData()[0][0];
         this.p1.y = vec1_rotated.getData()[1][0];
         this.p1.z = vec1_rotated.getData()[2][0];
 
-//        vecData = new double[][] {{this.p2.x}, {this.p2.y}, {this.p2.z}};
         vecData = new double[][] {{this.p2.x}, {this.p2.y}, {this.p2.z}};
         Matrix vec2 = new Matrix(vecData);
-        System.out.println("rot_mat:");
-        rot_mat.show();
-        System.out.println("vec2:");
-        vec2.show();
         Matrix vec2_rotated = rot_mat.times(vec2);
-        System.out.println("Vec2 after Rotation");
-        vec2_rotated.show();
         this.p2.x = vec2_rotated.getData()[0][0];
         this.p2.y = vec2_rotated.getData()[1][0];
         this.p2.z = vec2_rotated.getData()[2][0];
@@ -147,38 +115,11 @@ public class Triangle {
         return false;
     }
 
+    // draws a triangle
     public void draw(GraphicsContext gc){
         gc.strokeLine(p2.getX(), p2.getY(), p3.getX(), p3.getY());
         gc.strokeLine(p1.getX(), p1.getY(), p3.getX(), p3.getY());
         gc.strokeLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 
-
-
-
-	/*
-		Line side1 = new Line();
-		Line side2 = new Line();
-		Line side3 = new Line();
-		side1.X1 = p2.getX();
-		side1.Y1 = p2.getY();
-		side1.X2 = p3.getX();
-		side1.Y2 = p3.getY();
-		side1.Stroke = b;
-		grid.Children.Add(side1);
-
-
-		side2.X1 = p1.getX();
-		side2.Y1 = p1.getY();
-		side2.X2 = p3.getX();
-		side2.Y2 = p3.getY();
-		side2.Stroke = b;
-		grid.Children.Add(side2);
-		side3.X1 = p1.getX();
-		side3.Y1 = p1.getY();
-		side3.X2 = p2.getX();
-		side3.Y2 = p2.getY();
-		side3.Stroke = b;
-		grid.Children.Add(side3);
-		*/
     }
 }
